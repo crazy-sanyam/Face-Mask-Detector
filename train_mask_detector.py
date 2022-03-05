@@ -26,7 +26,9 @@ INIT_LR = 1e-4
 EPOCHS = 20
 BS = 32
 
-DIRECTORY = r"C:\Mask Detection\CODE\Face-Mask-Detection-master\dataset"
+# DIRECTORY = r"C:\Mask Detection\CODE\Face-Mask-Detection-master\dataset"
+DIRECTORY = r"D:\programming\Face-Mask-Detection\dataset"
+
 CATEGORIES = ["with_mask", "without_mask"]
 
 # grab the list of images in our dataset directory, then initialize
@@ -40,12 +42,13 @@ for category in CATEGORIES:
     path = os.path.join(DIRECTORY, category)
     for img in os.listdir(path):
     	img_path = os.path.join(path, img)
-    	image = load_img(img_path, target_size=(224, 224))
-    	image = img_to_array(image)
-    	image = preprocess_input(image)
-
-    	data.append(image)
-    	labels.append(category)
+		image = load_img(img_path, target_size=(224, 224))
+		image = img_to_array(image)
+		image = preprocess_input(image)
+		
+		data.append(image)
+		labels.append(category)
+ 
 
 # perform one-hot encoding on the labels
 lb = LabelBinarizer()
@@ -87,7 +90,7 @@ headModel = Dense(2, activation="softmax")(headModel)
 model = Model(inputs=baseModel.input, outputs=headModel)
 
 # loop over all layers in the base model and freeze them so they will
-# *not* be updated during the first training process
+#  *not* be updated during the first training process
 for layer in baseModel.layers:
 	layer.trainable = False
 
